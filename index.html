@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1 — What is Computer Vision?</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1612;
+    --paper: #f5f0e8;
+    --paper2: #ede8de;
+    --accent: #c8622a;
+    --accent2: #2a6e8a;
+    --accent3: #4a8c3f;
+    --muted: #7a7268;
+    --rule: #d4cfc4;
+    --card: #ffffff;
+    --serif: 'Playfair Display', Georgia, serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 17px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header ── */
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.02) 40px,
+      rgba(255,255,255,0.02) 41px
+    );
+  }
+  .session-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .masthead h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 7vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--paper);
+    max-width: 700px;
+    margin: 0 auto 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.25s forwards;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    color: #e8b49a;
+  }
+  .byline {
+    font-family: var(--body);
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.55);
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s forwards;
+  }
+  .read-time {
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: rgba(200,98,42,0.8);
+    border: 1px solid rgba(200,98,42,0.3);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.55s forwards;
+  }
+
+  /* ── Layout ── */
+  .article {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1.25rem 4rem;
+  }
+
+  /* ── Typography ── */
+  .drop-cap::first-letter {
+    font-family: var(--serif);
+    font-size: 4.2em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.8;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--accent);
+  }
+
+  p { margin-bottom: 1.4rem; }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.65rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 2.8rem 0 0.9rem;
+    color: var(--ink);
+  }
+  h2 .num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    display: block;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  .rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+  .rule-heavy {
+    border: none;
+    border-top: 2px solid var(--ink);
+    margin: 2.8rem 0 0;
+  }
+  .rule-accent {
+    border: none;
+    border-top: 3px solid var(--accent);
+    width: 48px;
+    margin: 0 0 1.4rem;
+  }
+
+  /* ── Pull quote ── */
+  .pullquote {
+    border-left: 3px solid var(--accent);
+    margin: 2.2rem 0;
+    padding: 0.8rem 0 0.8rem 1.4rem;
+  }
+  .pullquote p {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+  }
+  .pullquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-style: normal;
+  }
+
+  /* ── Year stamp ── */
+  .year-stamp {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.25rem 0.65rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Visual cards ── */
+  .visual-strip {
+    background: var(--ink);
+    margin: 2.5rem -1.25rem;
+    padding: 2rem 1.25rem;
+    color: var(--paper);
+  }
+  .visual-strip h3 {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .pillar-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 1rem;
+    transition: background 0.2s;
+  }
+  .pillar-card:hover { background: rgba(255,255,255,0.09); }
+  .pillar-card .icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .pillar-card .pillar-name {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+  .pillar-card .pillar-q {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .pillar-card .pillar-desc {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.65);
+    line-height: 1.55;
+  }
+  .pillar-card.full { grid-column: 1 / -1; }
+
+  /* ── Timeline ── */
+  .timeline {
+    position: relative;
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.6rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+  }
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+  .tl-title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .tl-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── Highlight box ── */
+  .highlight-box {
+    background: var(--paper2);
+    border-top: 3px solid var(--accent2);
+    padding: 1.3rem 1.4rem;
+    margin: 2rem 0;
+    border-radius: 0 0 4px 4px;
+  }
+  .highlight-box .label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+  .highlight-box p {
+    font-size: 0.92rem;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  /* ── Real world visual ── */
+  .application-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.6rem;
+    margin: 1.8rem 0;
+  }
+  .app-item {
+    text-align: center;
+    background: var(--paper2);
+    border-radius: 4px;
+    padding: 1rem 0.5rem;
+  }
+  .app-item .app-icon { font-size: 1.8rem; margin-bottom: 0.4rem; display: block; }
+  .app-item .app-name { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); display: block; margin-bottom: 0.2rem; }
+  .app-item .app-pillar { font-size: 0.72rem; font-weight: 400; color: var(--accent); font-family: var(--serif); font-style: italic; display: block; }
+
+  /* ── Puzzle section ── */
+  .puzzle-section {
+    background: var(--ink);
+    margin: 3rem -1.25rem -4rem;
+    padding: 2.5rem 1.25rem 3rem;
+    color: var(--paper);
+  }
+  .puzzle-section h2 {
+    color: var(--paper);
+    margin-top: 0;
+  }
+  .puzzle-section h2 .num { color: var(--accent); }
+
+  .puzzle-intro {
+    font-size: 0.92rem;
+    color: rgba(245,240,232,0.75);
+    margin-bottom: 1.8rem;
+    line-height: 1.7;
+  }
+
+  .scene-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 1.5rem;
+    margin-bottom: 1.4rem;
+    position: relative;
+  }
+  .scene-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  /* SVG scene illustration */
+  .scene-svg { width: 100%; border-radius: 4px; margin-bottom: 1rem; display: block; }
+
+  .puzzle-question {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--paper);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .option-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 0.82rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .option-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.3); }
+  .option-btn.correct { background: rgba(74,140,63,0.25); border-color: var(--accent3); color: #a8d4a3; }
+  .option-btn.wrong { background: rgba(200,98,42,0.15); border-color: rgba(200,98,42,0.4); color: rgba(245,240,232,0.5); }
+  .option-btn:disabled { cursor: default; }
+
+  .reveal-box {
+    display: none;
+    background: rgba(74,140,63,0.15);
+    border: 1px solid rgba(74,140,63,0.3);
+    border-radius: 4px;
+    padding: 1.1rem 1.2rem;
+    margin-top: 0.8rem;
+  }
+  .reveal-box.show { display: block; }
+  .reveal-box p {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.85);
+    margin: 0;
+    line-height: 1.65;
+  }
+  .reveal-box strong { color: #a8d4a3; }
+
+  /* puzzle 2 */
+  .label-scene { position: relative; margin-bottom: 1rem; }
+  .label-list { list-style: none; padding: 0; }
+  .label-list li {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+    color: rgba(245,240,232,0.8);
+  }
+  .label-list li .tag {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    background: var(--accent2);
+    color: white;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+    margin-top: 0.15rem;
+  }
+
+  .leaderboard-teaser {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1.5rem;
+  }
+  .leaderboard-teaser p {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.45);
+    text-align: center;
+    margin: 0;
+  }
+  .leaderboard-teaser strong { color: var(--accent); }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Utility ── */
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+  .accent { color: var(--accent); }
+  .mono { font-family: var(--mono); font-size: 0.8em; }
+
+  @media (max-width: 400px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+    .application-row { grid-template-columns: 1fr 1fr; }
+    .options-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Masthead ───────────────────────────────────────── -->
+<div class="masthead">
+  <div class="session-label">CV Research Circle · Session 01</div>
+  <h1>The Summer They Thought<br><em>Vision Was Easy</em></h1>
+  <div class="byline">A story about Computer Vision — from 1966 to right now</div>
+  <div class="read-time">~ 10 min read</div>
+</div>
+
+<!-- ── Article ────────────────────────────────────────── -->
+<div class="article">
+
+  <!-- Chapter 1 -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 01</span>The Summer Intern Who Was Going to Solve Vision</h2>
+    <div class="rule-accent"></div>
+
+    <p class="drop-cap">It is the summer of 1966. At MIT, a professor named Seymour Papert assigns an undergraduate student a summer project. The goal: connect a camera to a computer and make the machine describe what it sees.</p>
+
+    <p>A summer project. That was how long they thought it would take.</p>
+
+    <p>Fifty-eight years later, we have spent <strong>billions of dollars</strong>, built some of the most powerful computers in human history, and employed tens of thousands of researchers — and we are still working on it.</p>
+
+    <div class="pullquote">
+      <p>"The problem of computer vision turned out to be one of the hardest problems in all of science."</p>
+      <cite>— Marvin Minsky, MIT AI Lab, 1970s</cite>
+    </div>
+
+    <p>That gap — between how easy vision seems and how hard it actually is — is the whole story of this field. And understanding <em>why</em> that gap exists is the first thing you need to know as a CV researcher.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- Chapter 2 -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 02</span>Why Your Brain Is a Miracle You Never Think About</h2>
+    <div class="rule-accent"></div>
+
+    <p>Right now, without any effort, you are doing something extraordinary. You are reading these words, aware of the screen around them, probably sensing the room beyond that, and if someone walked through the door you would recognise their face in under a second.</p>
+
+    <p>Your brain takes a flat, 2D image projected onto your retina — essentially a grid of light intensities — and reconstructs from it a full 3D world. It knows which surfaces are closer. It understands that the handle disappearing behind the mug is still a handle. It recognises your friend's face even though it looks completely different from a different angle, in different lighting, five years older.</p>
+
+    <div class="highlight-box">
+      <div class="label">The core problem</div>
+      <p>A digital image is just a grid of numbers. Every pixel is three values — red, green, blue, between 0 and 255. That's all a machine sees. No depth. No context. No continuity. From those numbers, somehow, it must understand the world. That's Computer Vision.</p>
+    </div>
+
+    <p>For a human, seeing is unconscious and instant. For a machine, it requires explicitly solving every sub-problem that evolution spent 500 million years quietly solving for us.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- Chapter 3: Timeline -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 03</span>Six Decades in Six Moments</h2>
+    <div class="rule-accent"></div>
+    <p>Here is how the field went from a summer project to reshaping the world.</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1966</div>
+        <div class="tl-title">The Summer Project</div>
+        <p class="tl-desc">MIT's "Summer Vision Project" — expected to take weeks. Laid the groundwork for decades of research into edges, shapes, and object boundaries.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1980s</div>
+        <div class="tl-title">Rules and Hand-Crafting</div>
+        <p class="tl-desc">Researchers wrote explicit rules: "if you see a horizontal line above a vertical one, that's probably a table." It worked — barely — in controlled settings. The real world broke everything.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1998</div>
+        <div class="tl-title">LeNet — The First Hint</div>
+        <p class="tl-desc">Yann LeCun's neural network reads handwritten digits on cheques for banks. The idea of learning features from data, rather than hand-coding them, begins to take shape.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2012</div>
+        <div class="tl-title">AlexNet — The Earthquake</div>
+        <p class="tl-desc">A deep neural network enters the ImageNet competition and wins by a margin so large the entire field pivots overnight. Every modern CV system — YOLO, SAM, Stable Diffusion — traces its DNA to this moment.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2017–2020</div>
+        <div class="tl-title">The Transformer Revolution</div>
+        <p class="tl-desc">Attention mechanisms, originally designed for language, arrive in vision. Vision Transformers (ViT) show that the same architecture powering ChatGPT can also read images — often better than anything before it.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Now</div>
+        <div class="tl-title">Foundation Models</div>
+        <p class="tl-desc">Models like SAM (Segment Anything) and GPT-4V can see, describe, and reason about images with near-human fluency. The field being written in real time — and you're joining it now.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- Chapter 4: The Five Pillars visual -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 04</span>The Five Things Machines Can Learn to See</h2>
+    <div class="rule-accent"></div>
+    <p>Computer Vision is not one problem — it is five distinct ways of understanding an image. Each pillar is its own sub-field, with its own benchmarks, architectures, and open questions.</p>
+  </div>
+
+</div>
+
+<!-- Full-bleed pillars -->
+<div class="visual-strip fade-in">
+  <h3>The Five Pillars of Computer Vision</h3>
+  <div class="pillars-grid">
+    <div class="pillar-card">
+      <span class="icon">🏷️</span>
+      <span class="pillar-name">Classification</span>
+      <span class="pillar-q">"What is in this image?"</span>
+      <span class="pillar-desc">The model looks at the whole image and outputs a label. Cat. Car. Traffic sign. The starting point of modern CV.</span>
+    </div>
+    <div class="pillar-card">
+      <span class="icon">📦</span>
+      <span class="pillar-name">Detection</span>
+      <span class="pillar-q">"What is it, and where?"</span>
+      <span class="pillar-desc">Draws bounding boxes around every object and labels each one. The backbone of self-driving cars and security cameras.</span>
+    </div>
+    <div class="pillar-card">
+      <span class="icon">🎨</span>
+      <span class="pillar-name">Segmentation</span>
+      <span class="pillar-q">"Which pixels belong to what?"</span>
+      <span class="pillar-desc">Labels every single pixel in the image. Powers surgical robots, photo background removal, and autonomous navigation.</span>
+    </div>
+    <div class="pillar-card">
+      <span class="icon">✨</span>
+      <span class="pillar-name">Generation</span>
+      <span class="pillar-q">"Create an image that never existed."</span>
+      <span class="pillar-desc">Diffusion models, GANs, deepfakes, AI art. The machine doesn't just understand images — it invents them.</span>
+    </div>
+    <div class="pillar-card full">
+      <span class="icon">🌐</span>
+      <span class="pillar-name">3D Vision</span>
+      <span class="pillar-q">"What is the structure of this scene in space?"</span>
+      <span class="pillar-desc">Depth estimation, point clouds, spatial mapping. How self-driving cars understand distance, how AR anchors objects to physical space, how robots navigate rooms.</span>
+    </div>
+  </div>
+</div>
+
+<div class="article">
+
+  <!-- Real world -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 05</span>Where You Have Already Seen This</h2>
+    <div class="rule-accent"></div>
+    <p>You interact with Computer Vision dozens of times a day. Most of it is invisible.</p>
+
+    <div class="application-row">
+      <div class="app-item">
+        <span class="app-icon">📱</span>
+        <span class="app-name">Face Unlock</span>
+        <span class="app-pillar">Classification</span>
+      </div>
+      <div class="app-item">
+        <span class="app-icon">📸</span>
+        <span class="app-name">Google Photos</span>
+        <span class="app-pillar">Classification</span>
+      </div>
+      <div class="app-item">
+        <span class="app-icon">🌿</span>
+        <span class="app-name">BG Remove</span>
+        <span class="app-pillar">Segmentation</span>
+      </div>
+      <div class="app-item">
+        <span class="app-icon">🚗</span>
+        <span class="app-name">Autopilot</span>
+        <span class="app-pillar">Detection + 3D</span>
+      </div>
+      <div class="app-item">
+        <span class="app-icon">🎨</span>
+        <span class="app-name">Midjourney</span>
+        <span class="app-pillar">Generation</span>
+      </div>
+      <div class="app-item">
+        <span class="app-icon">🏥</span>
+        <span class="app-name">Radiology AI</span>
+        <span class="app-pillar">Segmentation</span>
+      </div>
+    </div>
+
+    <p>Every one of these was considered science fiction twenty years ago. Some of them were considered science fiction <em>ten</em> years ago.</p>
+
+    <div class="pullquote">
+      <p>The papers being published right now are not history. They are the field being written in real time.</p>
+    </div>
+
+    <p>That is what makes this the right moment to be studying this. Not to learn about what happened — but to understand what is happening, well enough to eventually contribute to what comes next.</p>
+  </div>
+
+  <hr class="rule">
+
+  <!-- What's ahead -->
+  <div class="fade-in">
+    <h2><span class="num">Chapter 06</span>What This Circle Is Going to Do</h2>
+    <div class="rule-accent"></div>
+
+    <p>Over the next twelve sessions — eight in-person, four online like this one — we are going to move through the major pillars of modern CV. We will read the actual papers. We will run the actual code. We will learn to question what we read, design experiments, and eventually present our own small piece of original work.</p>
+
+    <p>Every session comes with a Google Colab notebook you can run in your browser — no setup, no installation. You will not just read about how a ResNet works. You will remove its skip connections and watch the training collapse. You will not just read about attention. You will visualise where a Vision Transformer is looking when it classifies an image.</p>
+
+    <p>The goal by the end of the term is specific: pick up any CV paper, understand what it is claiming, question whether it actually proves that claim, and have a reasoned opinion about it.</p>
+
+    <p>That might feel ambitious right now. It will not feel that way by Session 8.</p>
+
+    <p>But first — a puzzle.</p>
+  </div>
+
+</div>
+
+<!-- ── Puzzle ───────────────────────────────────────────── -->
+<div class="puzzle-section">
+  <div style="max-width:680px;margin:0 auto;">
+
+    <h2><span class="num">Session Challenge · +5 Points</span>Guess What the Model Sees</h2>
+    <div class="rule-accent"></div>
+
+    <p class="puzzle-intro">Below are two scenes. For each one, a CV model is analysing the image. Your job: guess which CV task the model is performing, and what it would output. Think about the five pillars — which one fits what the model needs to do here?</p>
+
+    <!-- Puzzle 1 -->
+    <div class="scene-box fade-in">
+      <div class="scene-label">Scene 01 — The Street</div>
+
+      <!-- SVG illustration of a street scene -->
+      <svg class="scene-svg" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sky -->
+        <rect width="600" height="280" fill="#1a2332"/>
+        <!-- Road -->
+        <rect x="0" y="200" width="600" height="80" fill="#2a2a2a"/>
+        <!-- Road markings -->
+        <rect x="280" y="210" width="40" height="8" fill="#f0c040" opacity="0.7"/>
+        <rect x="280" y="232" width="40" height="8" fill="#f0c040" opacity="0.7"/>
+        <rect x="280" y="254" width="40" height="8" fill="#f0c040" opacity="0.7"/>
+        <!-- Buildings -->
+        <rect x="20" y="80" width="90" height="120" fill="#2d3a4a"/>
+        <rect x="130" y="100" width="70" height="100" fill="#263140"/>
+        <rect x="420" y="60" width="100" height="140" fill="#2d3a4a"/>
+        <rect x="540" y="90" width="60" height="110" fill="#263140"/>
+        <!-- Building windows -->
+        <rect x="35" y="95" width="15" height="12" fill="#f0c878" opacity="0.8"/>
+        <rect x="60" y="95" width="15" height="12" fill="#f0c878" opacity="0.4"/>
+        <rect x="85" y="95" width="15" height="12" fill="#f0c878" opacity="0.9"/>
+        <rect x="35" y="120" width="15" height="12" fill="#f0c878" opacity="0.6"/>
+        <rect x="60" y="120" width="15" height="12" fill="#f0c878" opacity="0.3"/>
+        <rect x="85" y="120" width="15" height="12" fill="#f0c878" opacity="0.7"/>
+        <rect x="435" y="80" width="15" height="12" fill="#f0c878" opacity="0.9"/>
+        <rect x="460" y="80" width="15" height="12" fill="#f0c878" opacity="0.5"/>
+        <rect x="485" y="80" width="15" height="12" fill="#f0c878" opacity="0.8"/>
+        <rect x="435" y="108" width="15" height="12" fill="#f0c878" opacity="0.4"/>
+        <rect x="460" y="108" width="15" height="12" fill="#f0c878" opacity="0.9"/>
+        <!-- Car 1 -->
+        <rect x="80" y="170" width="100" height="32" rx="5" fill="#c8622a"/>
+        <rect x="90" y="155" width="80" height="20" rx="4" fill="#e08050"/>
+        <circle cx="100" cy="204" r="10" fill="#222"/>
+        <circle cx="100" cy="204" r="5" fill="#555"/>
+        <circle cx="168" cy="204" r="10" fill="#222"/>
+        <circle cx="168" cy="204" r="5" fill="#555"/>
+        <rect x="152" y="160" width="20" height="12" rx="2" fill="#88ccee" opacity="0.7"/>
+        <!-- Car 2 -->
+        <rect x="360" y="168" width="110" height="34" rx="5" fill="#4a6a9a"/>
+        <rect x="375" y="152" width="82" height="22" rx="4" fill="#5a7aaa"/>
+        <circle cx="378" cy="204" r="10" fill="#222"/>
+        <circle cx="378" cy="204" r="5" fill="#555"/>
+        <circle cx="460" cy="204" r="10" fill="#222"/>
+        <circle cx="460" cy="204" r="5" fill="#555"/>
+        <!-- Person -->
+        <circle cx="255" cy="170" r="10" fill="#e8c49a"/>
+        <rect x="248" y="180" width="14" height="22" rx="3" fill="#5a7a9a"/>
+        <rect x="246" y="195" width="6" height="16" rx="2" fill="#3a5a7a"/>
+        <rect x="256" y="195" width="6" height="16" rx="2" fill="#3a5a7a"/>
+        <!-- Bounding boxes (what the model draws) -->
+        <rect x="73" y="148" width="115" height="62" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="75" y="145" fill="#4ade80" font-size="9" font-family="monospace">car 0.96</text>
+        <rect x="352" y="146" width="125" height="64" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="354" y="143" fill="#4ade80" font-size="9" font-family="monospace">car 0.94</text>
+        <rect x="241" y="158" width="30" height="44" fill="none" stroke="#facc15" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="243" y="155" fill="#facc15" font-size="9" font-family="monospace">person 0.89</text>
+        <!-- Label -->
+        <text x="12" y="22" fill="rgba(245,240,232,0.4)" font-size="10" font-family="monospace">MODEL OUTPUT PREVIEW</text>
+      </svg>
+
+      <p class="puzzle-question">The model has analysed this street scene and drawn coloured boxes around objects with labels and numbers. Which CV pillar is this? What do the numbers next to each label mean — and why do they matter?</p>
+
+      <div class="options-grid" id="q1-options">
+        <button class="option-btn" onclick="answer(this,'q1',false)">Classification — it identified what kind of scene this is</button>
+        <button class="option-btn" onclick="answer(this,'q1',true)">Detection — it found objects and located them with bounding boxes</button>
+        <button class="option-btn" onclick="answer(this,'q1',false)">Segmentation — it labelled every pixel in the image</button>
+        <button class="option-btn" onclick="answer(this,'q1',false)">Generation — it created this scene from a text prompt</button>
+      </div>
+
+      <div class="reveal-box" id="q1-reveal">
+        <p>✓ <strong>Detection.</strong> The model identified objects and drew bounding boxes around their exact positions — that's what separates Detection from Classification (which would just say "this is a street scene" with no locations). The numbers — 0.96, 0.94, 0.89 — are <strong>confidence scores</strong>. A score of 0.96 means the model is 96% confident it found a car at that location. This matters because in a real system, you set a threshold: anything below 0.5, say, gets ignored. Too low a threshold → too many false alarms. Too high → you miss real objects. Finding the right threshold for the right use case is itself a research problem.</p>
+      </div>
+    </div>
+
+    <!-- Puzzle 2 -->
+    <div class="scene-box fade-in">
+      <div class="scene-label">Scene 02 — The Medical Scan</div>
+
+      <!-- SVG of a medical scan with segmentation overlay -->
+      <svg class="scene-svg" viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+        <rect width="600" height="260" fill="#0d1117"/>
+        <!-- Scan background -->
+        <rect x="50" y="20" width="500" height="220" rx="4" fill="#111820"/>
+        <!-- Grayscale "scan" texture -->
+        <ellipse cx="300" cy="130" rx="180" ry="100" fill="#1e2d3d" opacity="0.9"/>
+        <ellipse cx="300" cy="130" rx="140" ry="75" fill="#243545" opacity="0.8"/>
+        <ellipse cx="270" cy="120" rx="60" ry="45" fill="#2d4258" opacity="0.9"/>
+        <ellipse cx="340" cy="135" rx="55" ry="42" fill="#2a3f55" opacity="0.9"/>
+        <!-- Segmentation overlays -->
+        <ellipse cx="270" cy="120" rx="60" ry="45" fill="rgba(74,190,120,0.25)" stroke="#4abe78" stroke-width="2"/>
+        <ellipse cx="340" cy="135" rx="55" ry="42" fill="rgba(42,110,138,0.25)" stroke="#2a6e8a" stroke-width="2"/>
+        <!-- Highlight region of interest -->
+        <ellipse cx="295" cy="108" rx="18" ry="14" fill="rgba(220,60,60,0.35)" stroke="#dc3c3c" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <!-- Labels -->
+        <text x="218" y="85" fill="#4abe78" font-size="9" font-family="monospace">region A — 94.2%</text>
+        <line x1="248" y1="88" x2="255" y2="100" stroke="#4abe78" stroke-width="1"/>
+        <text x="358" y="107" fill="#2a9eca" font-size="9" font-family="monospace">region B — 91.7%</text>
+        <line x1="356" y1="110" x2="345" y2="118" stroke="#2a9eca" stroke-width="1"/>
+        <text x="262" y="58" fill="#dc3c3c" font-size="9" font-family="monospace">anomaly flagged</text>
+        <line x1="290" y1="62" x2="292" y2="94" stroke="#dc3c3c" stroke-width="1" stroke-dasharray="2 2"/>
+        <!-- Corner markers like a medical viewer -->
+        <text x="58" y="38" fill="rgba(255,255,255,0.2)" font-size="8" font-family="monospace">AXIAL VIEW</text>
+        <text x="450" y="38" fill="rgba(255,255,255,0.2)" font-size="8" font-family="monospace">SLICE 42/80</text>
+        <text x="58" y="228" fill="rgba(255,255,255,0.2)" font-size="8" font-family="monospace">AI ANALYSIS — RESEARCH USE</text>
+        <text x="420" y="228" fill="rgba(255,255,255,0.2)" font-size="8" font-family="monospace">MODEL v2.4.1</text>
+      </svg>
+
+      <p class="puzzle-question">A CV model has analysed a medical scan. It has coloured different regions and flagged something in red. The doctor sees this overlay on their screen. What task is the model performing — and what is it actually doing to the image at the pixel level?</p>
+
+      <div class="options-grid" id="q2-options">
+        <button class="option-btn" onclick="answer(this,'q2',false)">Detection — it drew boxes around the organs</button>
+        <button class="option-btn" onclick="answer(this,'q2',false)">Classification — it decided what kind of scan this is</button>
+        <button class="option-btn" onclick="answer(this,'q2',true)">Segmentation — it labelled individual pixels by region and found an anomaly</button>
+        <button class="option-btn" onclick="answer(this,'q2',false)">Generation — it created the coloured overlay from scratch</button>
+      </div>
+
+      <div class="reveal-box" id="q2-reveal">
+        <p>✓ <strong>Segmentation.</strong> The model went through every single pixel in the scan and assigned it to a region — organ A, organ B, background, or anomaly. This is pixel-level understanding. A bounding box would not work here — a doctor needs to know the exact boundary of a tumour, not just roughly where it is. The red dashed region is the model flagging an anomaly it was not trained to expect — a deviation from what healthy tissue should look like at that pixel distribution. This is why CV in medicine is genuinely useful: it can process thousands of scans at the same consistency level a human radiologist can only sustain for a few hours.</p>
+      </div>
+    </div>
+
+    <!-- Bonus -->
+    <div class="scene-box fade-in" style="border-color:rgba(200,98,42,0.3);">
+      <div class="scene-label" style="color:#e8a070;">Bonus Question · +3 Points</div>
+      <p class="puzzle-question">In Scene 01, the model found a person with a confidence score of 0.89 — lower than the cars at 0.96 and 0.94. Give one reason why detecting a person might be harder for the model than detecting a car in a street scene.</p>
+
+      <div id="bonus-area">
+        <textarea id="bonus-input" placeholder="Write your answer here — share it in the group chat to claim your points..." style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);color:var(--paper);font-family:var(--body);font-size:0.85rem;padding:0.9rem;border-radius:4px;resize:vertical;min-height:80px;margin-bottom:0.8rem;line-height:1.6;"></textarea>
+        <button onclick="showBonus()" style="background:var(--accent);color:white;border:none;font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;padding:0.65rem 1.2rem;border-radius:3px;cursor:pointer;">REVEAL ANSWER IDEAS</button>
+      </div>
+
+      <div class="reveal-box" id="bonus-reveal">
+        <p>Good possible answers include: <strong>cars have rigid, consistent shapes</strong> — a car looks roughly the same from any angle, but a person changes shape drastically (standing, crouching, arms raised, wearing a coat). <strong>Scale variation</strong> — a person further away occupies far fewer pixels than a nearby car, giving the model less information. <strong>Occlusion</strong> — people are often partially hidden behind objects. <strong>Clothing variation</strong> — the model has to generalise across countless different appearances. Any one of these is a valid research-quality answer. Share yours in the group chat.</p>
+      </div>
+    </div>
+
+    <!-- Leaderboard teaser -->
+    <div class="leaderboard-teaser">
+      <p>📋 Share your answers in the group chat to claim your points.<br>
+      <strong>Leaderboard updates after every session.</strong><br>
+      Session 02 drops next week — the gap is still very small.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Scroll-triggered fade-ins
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Answer logic
+  function answer(btn, qid, correct) {
+    const opts = document.querySelectorAll(`#${qid}-options .option-btn`);
+    opts.forEach(b => {
+      b.disabled = true;
+      if (b === btn) b.classList.add(correct ? 'correct' : 'wrong');
+      else if (!correct && b.onclick.toString().includes('true')) b.classList.add('correct');
+    });
+    document.getElementById(`${qid}-reveal`).classList.add('show');
+  }
+
+  // Bonus reveal
+  function showBonus() {
+    document.getElementById('bonus-reveal').classList.add('show');
+  }
+</script>
+</body>
+</html>
