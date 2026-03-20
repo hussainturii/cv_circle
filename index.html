@@ -354,12 +354,22 @@ async function addPts(memberId, member, pts, questionId) {
   const alreadyKey = `session1_${questionId}`;
   const done = member.completed_questions || {};
   if (done[alreadyKey]) return false;
-  await update(ref(db,`circle/members/${memberId}`), {
-    total_pts: (member.total_pts||0) + pts,
-    last_session_pts: pts,
-    [`completed_questions/${alreadyKey}`]: true
+  const alreadyPending = await get(ref(db,'circle/pending'));
+  const pendingData = alreadyPending.val() || {};
+  const duplicate = Object.values(pendingData).find(p =>
+    p.type === 'puzzle' && p.question_key === alreadyKey &&
+    p.name.toLowerCase() === (member.display||member.name).toLowerCase()
+  );
+  if (duplicate) return false;
+  const r = push(ref(db,'circle/pending'));
+  await set(r, {
+    type: 'puzzle',
+    name: member.display || member.name,
+    session: 1,
+    pts,
+    question_key: alreadyKey,
+    submitted: new Date().toISOString()
   });
-  await update(ref(db,'circle'), { last_updated: new Date().toISOString() });
   return true;
 }
 
@@ -378,7 +388,7 @@ window.answer = async function(btn, qid, correct, pts) {
     if (!entry) { showPts(qid, `Name not found on leaderboard — register first then come back`); return; }
     const [id, m] = entry;
     const saved = await addPts(id, m, pts, qid);
-    showPts(qid, saved ? `+${pts} points awarded to the leaderboard` : 'Already answered — points counted once per session');
+    showPts(qid, saved ? `Answer submitted — points pending your approval` : 'Already submitted for this session');
   }
 };
 
@@ -393,7 +403,7 @@ window.submitBonus = async function() {
   if (!entry) { showPts('bonus', 'Name not found on leaderboard — register first'); return; }
   const [id, m] = entry;
   const saved = await addPts(id, m, 3, 'bonus');
-  showPts('bonus', saved ? '+3 points awarded to the leaderboard' : 'Already answered');
+  showPts('bonus', saved ? 'Answer submitted — points pending your approval' : 'Already submitted');
 };
 
 function showPts(qid, msg) {

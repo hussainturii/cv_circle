@@ -8,9 +8,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8de;--card:#ffffff;
-  --accent:#c8622a;--green:#1D9E75;--blue:#185FA5;
-  --muted:#7a7268;--rule:#d4cfc4;
+  --ink:#1a1612;--paper:#f5f0e8;--paper2:#ede8de;--card:#fff;
+  --accent:#c8622a;--green:#1D9E75;--muted:#7a7268;--rule:#d4cfc4;
   --gold:#b8860b;--silver:#7a7a7a;--bronze:#8b4513;
   --serif:'Playfair Display',Georgia,serif;
   --body:'Source Serif 4',Georgia,serif;
@@ -49,8 +48,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weigh
 .lb-row{display:grid;grid-template-columns:2.2rem 1fr auto;align-items:center;gap:.7rem;background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:.7rem .9rem}
 .lb-rank{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;font-weight:500}
 .lb-rank.g{color:var(--gold)}.lb-rank.s{color:var(--silver)}.lb-rank.b{color:var(--bronze)}
-.lb-name{font-size:.92rem}
-.lb-right{text-align:right}
+.lb-name{font-size:.92rem}.lb-right{text-align:right}
 .lb-pts{font-family:var(--mono);font-size:.92rem;font-weight:500;display:block}
 .lb-delta{font-family:var(--mono);font-size:.62rem;color:var(--green)}
 .lb-bar-wrap{height:2px;background:var(--paper2);border-radius:1px;margin-top:.3rem;grid-column:1/-1}
@@ -67,16 +65,14 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 .field{width:100%;background:var(--paper);border:1px solid var(--rule);color:var(--ink);font-family:var(--body);font-size:.9rem;padding:.6rem .8rem;border-radius:4px;margin-bottom:.7rem;outline:none}
 .field:focus{border-color:var(--green)}
 .btn{width:100%;background:var(--green);color:#fff;border:none;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.65rem;border-radius:4px;cursor:pointer;margin-bottom:.5rem}
-.btn:hover{background:#168a63}
-.btn:disabled{opacity:.4;cursor:default}
+.btn:hover{background:#168a63}.btn:disabled{opacity:.4;cursor:default}
 .checkin-box{background:var(--ink);color:var(--paper);border-radius:8px;padding:1.3rem 1.4rem;margin:1rem 0}
 .checkin-box h3{font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
 .checkin-box p{font-size:.82rem;color:rgba(245,240,232,.6);margin-bottom:.9rem;line-height:1.55}
-.dark-field{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--paper);font-family:var(--body);font-size:.9rem;padding:.6rem .8rem;border-radius:4px;margin-bottom:.7rem;outline:none}
-.dark-field:focus{border-color:rgba(29,158,117,.6)}
-.accent-btn{width:100%;background:var(--accent);color:#fff;border:none;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.65rem;border-radius:4px;cursor:pointer}
-.accent-btn:hover{background:#b5541f}
-.accent-btn:disabled{opacity:.4;cursor:default}
+.df{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--paper);font-family:var(--body);font-size:.9rem;padding:.6rem .8rem;border-radius:4px;margin-bottom:.7rem;outline:none}
+.df:focus{border-color:rgba(29,158,117,.6)}
+.ab2{width:100%;background:var(--accent);color:#fff;border:none;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.65rem;border-radius:4px;cursor:pointer}
+.ab2:hover{background:#b5541f}.ab2:disabled{opacity:.4;cursor:default}
 .admin-toggle{display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;color:var(--muted);background:none;border:1px solid var(--rule);padding:.5rem 1.2rem;border-radius:4px;width:100%;margin-top:1.5rem}
 .admin-toggle:hover{background:var(--paper2)}
 .admin-panel{background:var(--ink);color:var(--paper);border-radius:8px;padding:1.4rem;margin-top:.8rem}
@@ -91,12 +87,24 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 .ab.danger{background:rgba(220,60,60,.18);color:#f09595}.ab.danger:hover{background:rgba(220,60,60,.32)}
 .pts-grid{display:grid;grid-template-columns:1fr auto;gap:.5rem;margin-bottom:.6rem}
 .pts-grid .af{margin:0}
-.pin-msg{font-family:var(--mono);font-size:.62rem;margin-top:.3rem;min-height:1rem}
-.pin-msg.ok{color:#4abe78}.pin-msg.err{color:#f09595}.pin-msg.hint{color:rgba(245,240,232,.35)}
-.pin-msg.checking{color:rgba(245,240,232,.45)}
-.setup-box{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.3);border-radius:6px;padding:1rem 1.1rem;margin-bottom:1rem}
-.setup-box p{font-size:.82rem;color:rgba(245,240,232,.8);margin-bottom:.7rem;line-height:1.55}
+.pmsg{font-family:var(--mono);font-size:.62rem;margin-top:.3rem;min-height:1rem}
+.pmsg.ok{color:#4abe78}.pmsg.err{color:#f09595}.pmsg.hint{color:rgba(245,240,232,.35)}.pmsg.chk{color:rgba(245,240,232,.5)}
+.setup-box{background:rgba(29,158,117,.12);border:1px solid rgba(29,158,117,.28);border-radius:6px;padding:1rem 1.1rem;margin-bottom:1rem}
+.setup-box p{font-size:.82rem;color:rgba(245,240,232,.8);margin-bottom:.6rem;line-height:1.55}
 .setup-box p strong{color:#9fd8c4}
+.pending-section{margin-top:1.2rem}
+.pending-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:.8rem 1rem;margin-bottom:.6rem;display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap}
+.pending-info{flex:1;min-width:0}
+.pending-name{font-size:.88rem;color:var(--paper);margin-bottom:.2rem}
+.pending-meta{font-family:var(--mono);font-size:.6rem;color:rgba(245,240,232,.45)}
+.pending-pts{font-family:var(--mono);font-size:.85rem;color:#9fd8c4;white-space:nowrap}
+.pending-actions{display:flex;gap:.5rem}
+.pa-btn{border:none;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;padding:.35rem .7rem;border-radius:3px;cursor:pointer}
+.pa-btn.approve{background:rgba(29,158,117,.25);color:#9fd8c4}
+.pa-btn.approve:hover{background:rgba(29,158,117,.4)}
+.pa-btn.reject{background:rgba(220,60,60,.18);color:#f09595}
+.pa-btn.reject:hover{background:rgba(220,60,60,.32)}
+.no-pending{font-family:var(--mono);font-size:.65rem;color:rgba(245,240,232,.3);text-align:center;padding:.8rem 0}
 .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;padding:.5rem 1.1rem;border-radius:4px;border:1px solid rgba(200,98,42,.4);opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;white-space:nowrap}
 .toast.show{opacity:1}
 .last-up{font-family:var(--mono);font-size:.58rem;color:var(--muted);text-align:center;margin-top:1.4rem}
@@ -104,7 +112,6 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 </style>
 </head>
 <body>
-
 <div class="masthead">
   <div class="eyebrow">CV Research Circle</div>
   <h1>Leaderboard</h1>
@@ -130,9 +137,9 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
   <div class="sec-label">Session check-in</div>
   <div class="checkin-box">
     <h3>Mark your attendance</h3>
-    <p>Enter your registered name and check in for today's session. One check-in per session — earns +2 pts.</p>
-    <input class="dark-field" id="checkin-name" placeholder="Your registered name" autocomplete="off">
-    <button class="accent-btn" id="checkin-btn" onclick="doCheckin()">Check in — earn +2 pts</button>
+    <p>Enter your registered name and check in for today's session. Your attendance is sent for approval — points appear once confirmed. One check-in per session.</p>
+    <input class="df" id="checkin-name" placeholder="Your registered name" autocomplete="off">
+    <button class="ab2" id="checkin-btn" onclick="doCheckin()">Check in — earn +2 pts</button>
   </div>
 
   <div class="sec-label">New here?</div>
@@ -142,7 +149,7 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <input class="field" id="reg-nick" placeholder="Nickname (optional — shown on board)" autocomplete="off">
     <button class="btn" onclick="doRegister()">Join the circle</button>
     <div id="reg-msg" style="font-family:var(--mono);font-size:.65rem;min-height:1rem"></div>
-    <div class="snote">Your name is used only to track your puzzle points and attendance.</div>
+    <div class="snote">Your name is used only to track puzzle points and attendance.</div>
   </div>
 
   <button class="admin-toggle" onclick="toggleAdmin()">Admin panel — circle lead only</button>
@@ -151,19 +158,22 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 
     <div id="setup-prompt" style="display:none">
       <div class="setup-box">
-        <p><strong>First time setup.</strong> No admin PIN exists yet in the database. Create one now — this PIN will be stored securely and required on every device to access admin controls.</p>
+        <p><strong>First-time setup.</strong> Create your admin PIN. Stored as a secure hash — nobody can read or reverse it. Store it somewhere safe.</p>
       </div>
-      <input type="password" class="af" id="setup-pin" placeholder="Choose your admin PIN (min 4 characters)">
+      <input type="password" class="af" id="setup-pin"  placeholder="Choose admin PIN (min 4 characters)">
       <input type="password" class="af" id="setup-pin2" placeholder="Confirm PIN">
       <button class="ab pri" onclick="setupPin()">Set admin PIN</button>
     </div>
 
-    <div id="login-prompt">
+    <div id="login-prompt" style="display:none">
       <input type="password" class="af" id="pin-input" placeholder="Enter admin PIN" oninput="tryPin()">
-      <div class="pin-msg hint" id="pin-msg">Circle lead access only — PIN stored securely in database</div>
+      <div class="pmsg hint" id="pin-msg">Circle lead access only</div>
     </div>
 
     <div id="admin-controls" style="display:none">
+
+      <div class="asub">Pending approvals</div>
+      <div class="pending-section" id="pending-list"><div class="no-pending">No pending items</div></div>
 
       <div class="asub">Current session</div>
       <input type="number" class="af" id="cur-session" placeholder="Session number 1–12" min="1" max="12">
@@ -174,30 +184,28 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
       <input type="text" class="af" id="manual-nick" placeholder="Nickname (optional)">
       <button class="ab sec" onclick="manualAdd()">Add member</button>
 
-      <div class="asub">Award bonus points</div>
+      <div class="asub">Award / adjust points</div>
       <select class="af" id="award-member"><option value="">Select member...</option></select>
       <div class="pts-grid">
-        <input type="number" class="af" id="award-pts" placeholder="Points" min="1">
+        <input type="number" class="af" id="award-pts" placeholder="Points" min="0">
         <select class="af" id="award-mode"><option value="add">Add</option><option value="set">Set total</option></select>
       </div>
-      <button class="ab pri" onclick="awardPoints()">Award points</button>
+      <button class="ab pri" onclick="awardPoints()">Update points</button>
 
       <div class="asub">Remove member</div>
       <select class="af" id="del-member"><option value="">Select member...</option></select>
-      <input type="password" class="af" id="del-pin" placeholder="Re-enter PIN to confirm">
       <button class="ab danger" onclick="removeMember()">Remove selected member</button>
 
       <div class="asub">Reset all scores</div>
-      <input type="password" class="af" id="reset-pin" placeholder="Re-enter PIN to confirm">
       <button class="ab danger" onclick="resetAll()">Reset all scores to zero</button>
 
       <div class="asub">Change admin PIN</div>
-      <input type="password" class="af" id="old-pin" placeholder="Current PIN">
-      <input type="password" class="af" id="new-pin" placeholder="New PIN (min 4 characters)">
+      <input type="password" class="af" id="old-pin"  placeholder="Current PIN">
+      <input type="password" class="af" id="new-pin"  placeholder="New PIN (min 4 characters)">
       <input type="password" class="af" id="new-pin2" placeholder="Confirm new PIN">
       <button class="ab sec" onclick="changePin()">Change PIN</button>
 
-      <div class="asub">Session</div>
+      <div class="asub">Lock</div>
       <button class="ab sec" onclick="doLogout()">Lock admin panel</button>
     </div>
   </div>
@@ -214,28 +222,37 @@ import { getDatabase, ref, onValue, set, get, update, remove, push }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const cfg = {
-  apiKey: "AIzaSyC299bnYDeewWikXfuXIU-ZCFZ75mxooWU",
-  authDomain: "cv-circle-c5122.firebaseapp.com",
-  databaseURL: "https://cv-circle-c5122-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "cv-circle-c5122",
-  storageBucket: "cv-circle-c5122.firebasestorage.app",
-  messagingSenderId: "95986186758",
-  appId: "1:95986186758:web:538e36f5692a269be7a187"
+  apiKey:"AIzaSyC299bnYDeewWikXfuXIU-ZCFZ75mxooWU",
+  authDomain:"cv-circle-c5122.firebaseapp.com",
+  databaseURL:"https://cv-circle-c5122-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"cv-circle-c5122",
+  storageBucket:"cv-circle-c5122.firebasestorage.app",
+  messagingSenderId:"95986186758",
+  appId:"1:95986186758:web:538e36f5692a269be7a187"
 };
 
 const app = initializeApp(cfg);
 const db  = getDatabase(app);
 
-let members  = {};
-let session  = 1;
-let unlocked = false;
+const SALT      = 'cvcircle_2024_';
+const TOKEN_KEY = 'cvcircle_admin_token_v4';
 
-async function hashPin(pin) {
-  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('cvcircle_salt_' + pin));
+let members    = {};
+let pending    = {};
+let session    = 1;
+let unlocked   = false;
+let adminToken = null;
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
 }
-
-const ini = n => n.trim().split(/\s+/).map(w=>w[0]?.toUpperCase()||'').slice(0,2).join('');
+function genToken() {
+  const a=new Uint8Array(24); crypto.getRandomValues(a);
+  return Array.from(a).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+const ini = n=>n.trim().split(/\s+/).map(w=>w[0]?.toUpperCase()||'').slice(0,2).join('');
+const now = ()=>new Date().toISOString();
 
 function badges(m) {
   const b=[];
@@ -245,32 +262,29 @@ function badges(m) {
   return b;
 }
 
-function render(snap) {
-  const data = snap.val()||{};
-  members = data.members||{};
-  session = data.session ||1;
-  const arr = Object.entries(members)
-    .map(([id,m])=>({id,...m}))
-    .sort((a,b)=>(b.total_pts||0)-(a.total_pts||0));
-  const top = arr.length?(arr[0].total_pts||0):0;
-  document.getElementById('stat-members').textContent = arr.length;
-  document.getElementById('stat-session').textContent = session;
-  document.getElementById('stat-top').textContent     = top;
-  document.getElementById('session-label').textContent= `Session ${session} of 12`;
-  renderPodium(arr);
-  renderList(arr, top||1);
-  renderSelects(arr);
-  const ts = data.last_updated;
-  document.getElementById('last-up').textContent = ts
-    ? `Last updated: ${new Date(ts).toLocaleString()}` : '';
-}
+onValue(ref(db,'circle'), snap=>{
+  const data=snap.val()||{};
+  members=data.members||{};
+  session=data.session||1;
+  pending=data.pending||{};
+  const arr=Object.entries(members).map(([id,m])=>({id,...m})).sort((a,b)=>(b.total_pts||0)-(a.total_pts||0));
+  const top=arr.length?(arr[0].total_pts||0):0;
+  document.getElementById('stat-members').textContent=arr.length;
+  document.getElementById('stat-session').textContent=session;
+  document.getElementById('stat-top').textContent=top;
+  document.getElementById('session-label').textContent=`Session ${session} of 12`;
+  renderPodium(arr); renderList(arr,top||1); renderSelects(arr);
+  if (unlocked) renderPending();
+  const ts=data.last_updated;
+  document.getElementById('last-up').textContent=ts?`Last updated: ${new Date(ts).toLocaleString()}`:'';
+});
 
 function renderPodium(arr) {
   const el=document.getElementById('podium');
   if (!arr.length){el.innerHTML='<div class="empty-state">No members yet</div>';return;}
   const t=arr.slice(0,3);
   const order=t.length>=3?[t[1],t[0],t[2]]:t.length===2?[t[1],t[0]]:[t[0]];
-  const cls  =t.length>=3?['p2','p1','p3']:t.length===2?['p2','p1']:['p1'];
+  const cls=t.length>=3?['p2','p1','p3']:t.length===2?['p2','p1']:['p1'];
   el.innerHTML=order.map((m,i)=>`
     <div class="podium-item ${cls[i]}">
       <div class="avatar">${ini(m.display||m.name)}</div>
@@ -298,28 +312,95 @@ function renderList(arr,max) {
 }
 
 function renderSelects(arr) {
-  const opts='<option value="">Select member...</option>'+
-    arr.map(m=>`<option value="${m.id}">${m.display||m.name} (${m.total_pts||0} pts)</option>`).join('');
+  const opts='<option value="">Select member...</option>'+arr.map(m=>`<option value="${m.id}">${m.display||m.name} (${m.total_pts||0} pts)</option>`).join('');
   document.getElementById('award-member').innerHTML=opts;
   document.getElementById('del-member').innerHTML=opts;
 }
 
-onValue(ref(db,'circle'), render);
+function renderPending() {
+  const el=document.getElementById('pending-list');
+  const items=Object.entries(pending);
+  if (!items.length){el.innerHTML='<div class="no-pending">No pending items</div>';return;}
+  el.innerHTML=items.map(([id,p])=>`
+    <div class="pending-item">
+      <div class="pending-info">
+        <div class="pending-name">${p.name}</div>
+        <div class="pending-meta">${p.type} · session ${p.session} · ${new Date(p.submitted).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+      <div class="pending-pts">+${p.pts} pts</div>
+      <div class="pending-actions">
+        <button class="pa-btn approve" onclick="approvePending('${id}')">Approve</button>
+        <button class="pa-btn reject"  onclick="rejectPending('${id}')">Reject</button>
+      </div>
+    </div>`).join('');
+}
 
-const now=()=>new Date().toISOString();
+async function verifyToken() {
+  if (!adminToken) return false;
+  const snap=await get(ref(db,'circle/admin_token'));
+  if (!snap.exists()) return false;
+  const check=await sha256(SALT+adminToken);
+  return check===snap.val();
+}
 
-window.toggleAdmin = async () => {
+async function adminOp(fn) {
+  if (!unlocked){toast('Not unlocked');return false;}
+  const ok=await verifyToken();
+  if (!ok){toast('Session expired — please log in again');doLogout();return false;}
+  await fn(); return true;
+}
+
+window.approvePending = async (id) => {
+  const item=pending[id];
+  if (!item) return;
+  await adminOp(async ()=>{
+    const entry=Object.entries(members).find(([,m])=>
+      m.name.toLowerCase()===item.name.toLowerCase()||(m.display||'').toLowerCase()===item.name.toLowerCase()
+    );
+    if (!entry){toast(`Member not found: ${item.name}`);return;}
+    const [mid,m]=entry;
+    const checked=m.checked_sessions||[];
+    if (item.type==='checkin' && checked.includes(item.session)){
+      toast('Already checked in — rejecting duplicate');
+      await remove(ref(db,`circle/pending/${id}`));return;
+    }
+    const done=m.completed_questions||{};
+    if (item.type==='puzzle' && done[item.question_key]){
+      toast('Already answered — rejecting duplicate');
+      await remove(ref(db,`circle/pending/${id}`));return;
+    }
+    const updates={};
+    updates[`circle/members/${mid}/total_pts`]=(m.total_pts||0)+item.pts;
+    updates[`circle/members/${mid}/last_session_pts`]=item.pts;
+    if (item.type==='checkin'){
+      updates[`circle/members/${mid}/sessions_attended`]=(m.sessions_attended||0)+1;
+      updates[`circle/members/${mid}/checked_sessions`]=[...checked,item.session];
+    }
+    if (item.type==='puzzle'){
+      updates[`circle/members/${mid}/completed_questions/${item.question_key}`]=true;
+    }
+    updates[`circle/pending/${id}`]=null;
+    updates['circle/last_updated']=now();
+    await update(ref(db),updates);
+    toast(`Approved: +${item.pts} pts for ${item.name}`);
+  });
+};
+
+window.rejectPending = async (id) => {
+  const item=pending[id];
+  if (!item) return;
+  await adminOp(async ()=>{
+    await remove(ref(db,`circle/pending/${id}`));
+    toast(`Rejected: ${item.name} — ${item.type}`);
+  });
+};
+
+window.toggleAdmin = async ()=>{
   const panel=document.getElementById('admin-panel');
-  const isOpen=panel.style.display!=='none';
-  if (isOpen) {
-    panel.style.display='none';
-    unlocked=false;
-    document.getElementById('admin-controls').style.display='none';
-    return;
-  }
+  if (panel.style.display!=='none'){panel.style.display='none';doLogout();return;}
   panel.style.display='block';
   const snap=await get(ref(db,'circle/admin_pin'));
-  if (!snap.exists()) {
+  if (!snap.exists()){
     document.getElementById('setup-prompt').style.display='block';
     document.getElementById('login-prompt').style.display='none';
   } else {
@@ -328,83 +409,76 @@ window.toggleAdmin = async () => {
   }
 };
 
-window.setupPin = async () => {
+window.setupPin = async ()=>{
   const p1=document.getElementById('setup-pin').value.trim();
   const p2=document.getElementById('setup-pin2').value.trim();
   if (p1.length<4){toast('PIN must be at least 4 characters');return;}
   if (p1!==p2){toast('PINs do not match');return;}
-  const hashed=await hashPin(p1);
-  await set(ref(db,'circle/admin_pin'), hashed);
+  const pinHash=await sha256(SALT+p1);
+  const token=genToken();
+  const tokenHash=await sha256(SALT+token);
+  await update(ref(db,'circle'),{admin_pin:pinHash,admin_token:tokenHash});
+  localStorage.setItem(TOKEN_KEY,token);
+  adminToken=token; unlocked=true;
   document.getElementById('setup-prompt').style.display='none';
-  document.getElementById('login-prompt').style.display='block';
-  document.getElementById('setup-pin').value='';
-  document.getElementById('setup-pin2').value='';
-  toast('PIN created — you can now log in');
+  document.getElementById('admin-controls').style.display='block';
+  document.getElementById('cur-session').value=session;
+  renderPending();
+  toast('PIN set — admin unlocked');
 };
 
-window.tryPin = async () => {
+window.tryPin = async ()=>{
   const val=document.getElementById('pin-input').value;
   const msg=document.getElementById('pin-msg');
-  if (val.length<4) {
-    msg.className='pin-msg hint';
-    msg.textContent='Circle lead access only — PIN stored securely in database';
-    return;
-  }
-  msg.className='pin-msg checking';
-  msg.textContent='Checking...';
+  if (val.length<4){msg.className='pmsg hint';msg.textContent='Circle lead access only';return;}
+  msg.className='pmsg chk';msg.textContent='Checking...';
   const snap=await get(ref(db,'circle/admin_pin'));
-  if (!snap.exists()){msg.className='pin-msg err';msg.textContent='No PIN set yet';return;}
-  const stored=snap.val();
-  const entered=await hashPin(val);
-  if (entered===stored) {
-    unlocked=true;
-    document.getElementById('admin-controls').style.display='block';
-    document.getElementById('login-prompt').style.display='none';
-    const cs=document.getElementById('cur-session');
-    if (!cs.value) cs.value=session;
-    msg.className='pin-msg ok';
-    msg.textContent='Unlocked';
-  } else {
-    msg.className='pin-msg err';
-    msg.textContent='Incorrect PIN';
+  if (!snap.exists()){msg.className='pmsg err';msg.textContent='No PIN set yet';return;}
+  const entered=await sha256(SALT+val);
+  if (entered!==snap.val()){msg.className='pmsg err';msg.textContent='Incorrect PIN';return;}
+  let token=localStorage.getItem(TOKEN_KEY);
+  const tokenSnap=await get(ref(db,'circle/admin_token'));
+  if (token && tokenSnap.exists()){
+    const th=await sha256(SALT+token);
+    if (th!==tokenSnap.val()) token=null;
   }
+  if (!token){
+    token=genToken();
+    const th=await sha256(SALT+token);
+    await set(ref(db,'circle/admin_token'),th);
+    localStorage.setItem(TOKEN_KEY,token);
+  }
+  adminToken=token; unlocked=true;
+  document.getElementById('login-prompt').style.display='none';
+  document.getElementById('admin-controls').style.display='block';
+  document.getElementById('cur-session').value=session;
+  msg.className='pmsg ok';msg.textContent='Unlocked';
+  renderPending();
 };
 
-async function verifyPin(inputId) {
-  const val=document.getElementById(inputId).value;
-  if (!val) return false;
-  const snap=await get(ref(db,'circle/admin_pin'));
-  if (!snap.exists()) return false;
-  const entered=await hashPin(val);
-  return entered===snap.val();
-}
-
-window.doLogout = () => {
-  unlocked=false;
+window.doLogout = ()=>{
+  unlocked=false; adminToken=null;
   document.getElementById('admin-controls').style.display='none';
-  document.getElementById('login-prompt').style.display='block';
+  const lp=document.getElementById('login-prompt');
+  lp.style.display='block';
   document.getElementById('pin-input').value='';
-  document.getElementById('pin-msg').className='pin-msg hint';
-  document.getElementById('pin-msg').textContent='Circle lead access only — PIN stored securely in database';
+  document.getElementById('pin-msg').className='pmsg hint';
+  document.getElementById('pin-msg').textContent='Circle lead access only';
 };
 
-window.setSession = async () => {
-  if (!unlocked) return;
+window.setSession = async ()=>adminOp(async ()=>{
   const s=parseInt(document.getElementById('cur-session').value);
   if (!s||s<1||s>12){toast('Enter 1–12');return;}
   await update(ref(db,'circle'),{session:s,last_updated:now()});
   toast(`Session set to ${s}`);
-};
+});
 
-window.manualAdd = async () => {
-  if (!unlocked) return;
+window.manualAdd = async ()=>adminOp(async ()=>{
   const name=document.getElementById('manual-name').value.trim();
   const nick=document.getElementById('manual-nick').value.trim();
   if (!name){toast('Enter a name');return;}
   const display=nick||name;
-  const taken=Object.values(members).find(m=>
-    m.name.toLowerCase()===name.toLowerCase()||(m.display||'').toLowerCase()===display.toLowerCase()
-  );
+  const taken=Object.values(members).find(m=>m.name.toLowerCase()===name.toLowerCase()||(m.display||'').toLowerCase()===display.toLowerCase());
   if (taken){toast('Name already exists');return;}
   const r=push(ref(db,'circle/members'));
   await set(r,{name,display,total_pts:0,last_session_pts:0,sessions_attended:0,checked_sessions:[],joined:now()});
@@ -412,10 +486,9 @@ window.manualAdd = async () => {
   document.getElementById('manual-name').value='';
   document.getElementById('manual-nick').value='';
   toast(`Added: ${display}`);
-};
+});
 
-window.awardPoints = async () => {
-  if (!unlocked) return;
+window.awardPoints = async ()=>adminOp(async ()=>{
   const id=document.getElementById('award-member').value;
   const pts=parseInt(document.getElementById('award-pts').value)||0;
   const mode=document.getElementById('award-mode').value;
@@ -426,27 +499,19 @@ window.awardPoints = async () => {
   await update(ref(db,'circle'),{last_updated:now()});
   toast(`${m.display||m.name} — ${newTotal} pts`);
   document.getElementById('award-pts').value='';
-};
+});
 
-window.removeMember = async () => {
-  if (!unlocked) return;
+window.removeMember = async ()=>adminOp(async ()=>{
   const id=document.getElementById('del-member').value;
   if (!id){toast('Select a member');return;}
-  const ok=await verifyPin('del-pin');
-  if (!ok){toast('PIN confirmation incorrect');return;}
-  const m=members[id];
-  if (!confirm(`Remove ${m.display||m.name} permanently?`)) return;
+  if (!confirm(`Remove ${members[id].display||members[id].name} permanently?`)) return;
   await remove(ref(db,`circle/members/${id}`));
   await update(ref(db,'circle'),{last_updated:now()});
-  document.getElementById('del-pin').value='';
   toast('Member removed');
-};
+});
 
-window.resetAll = async () => {
-  if (!unlocked) return;
-  const ok=await verifyPin('reset-pin');
-  if (!ok){toast('PIN confirmation incorrect');return;}
-  if (!confirm('Reset ALL scores to zero? This cannot be undone.')) return;
+window.resetAll = async ()=>adminOp(async ()=>{
+  if (!confirm('Reset ALL scores to zero? Cannot be undone.')) return;
   const u={'circle/last_updated':now()};
   Object.keys(members).forEach(id=>{
     u[`circle/members/${id}/total_pts`]=0;
@@ -455,38 +520,32 @@ window.resetAll = async () => {
     u[`circle/members/${id}/checked_sessions`]=[];
   });
   await update(ref(db),u);
-  document.getElementById('reset-pin').value='';
   toast('All scores reset');
-};
+});
 
-window.changePin = async () => {
-  if (!unlocked) return;
+window.changePin = async ()=>adminOp(async ()=>{
   const old=document.getElementById('old-pin').value.trim();
   const np =document.getElementById('new-pin').value.trim();
   const np2=document.getElementById('new-pin2').value.trim();
   if (np.length<4){toast('New PIN must be at least 4 characters');return;}
   if (np!==np2){toast('New PINs do not match');return;}
   const snap=await get(ref(db,'circle/admin_pin'));
-  if (!snap.exists()){toast('No PIN exists yet');return;}
-  const oldHash=await hashPin(old);
+  if (!snap.exists()){toast('No PIN exists');return;}
+  const oldHash=await sha256(SALT+old);
   if (oldHash!==snap.val()){toast('Current PIN incorrect');return;}
-  const newHash=await hashPin(np);
-  await set(ref(db,'circle/admin_pin'), newHash);
-  document.getElementById('old-pin').value='';
-  document.getElementById('new-pin').value='';
-  document.getElementById('new-pin2').value='';
-  toast('PIN changed successfully');
-};
+  const newHash=await sha256(SALT+np);
+  await set(ref(db,'circle/admin_pin'),newHash);
+  toast('PIN changed');
+  ['old-pin','new-pin','new-pin2'].forEach(id=>document.getElementById(id).value='');
+});
 
-window.doRegister = async () => {
-  const name  =document.getElementById('reg-name').value.trim();
-  const nick  =document.getElementById('reg-nick').value.trim();
-  const msgEl =document.getElementById('reg-msg');
+window.doRegister = async ()=>{
+  const name=document.getElementById('reg-name').value.trim();
+  const nick=document.getElementById('reg-nick').value.trim();
+  const msgEl=document.getElementById('reg-msg');
   if (!name){msgEl.style.color='#a32d2d';msgEl.textContent='Please enter your name.';return;}
   const display=nick||name;
-  const taken=Object.values(members).find(m=>
-    m.name.toLowerCase()===name.toLowerCase()||(m.display||'').toLowerCase()===display.toLowerCase()
-  );
+  const taken=Object.values(members).find(m=>m.name.toLowerCase()===name.toLowerCase()||(m.display||'').toLowerCase()===display.toLowerCase());
   if (taken){msgEl.style.color='#a32d2d';msgEl.textContent='Name already taken — try a different nickname.';return;}
   const r=push(ref(db,'circle/members'));
   await set(r,{name,display,total_pts:0,last_session_pts:0,sessions_attended:0,checked_sessions:[],joined:now()});
@@ -498,35 +557,32 @@ window.doRegister = async () => {
   toast(`${display} joined the circle`);
 };
 
-window.doCheckin = async () => {
+window.doCheckin = async ()=>{
   const input=document.getElementById('checkin-name').value.trim().toLowerCase();
-  const btn  =document.getElementById('checkin-btn');
+  const btn=document.getElementById('checkin-btn');
   if (!input){toast('Enter your name to check in');return;}
-  const entry=Object.entries(members).find(([,m])=>
-    m.name.toLowerCase()===input||(m.display||'').toLowerCase()===input
-  );
+  const entry=Object.entries(members).find(([,m])=>m.name.toLowerCase()===input||(m.display||'').toLowerCase()===input);
   if (!entry){toast('Name not found — register first');return;}
-  const [id,m]=entry;
+  const [,m]=entry;
   const checked=m.checked_sessions||[];
   if (checked.includes(session)){toast('Already checked in for this session');return;}
+  const alreadyPending=Object.values(pending).find(p=>
+    p.type==='checkin' && p.session===session &&
+    (p.name.toLowerCase()===input||(m.display||'').toLowerCase()===p.name.toLowerCase())
+  );
+  if (alreadyPending){toast('Check-in already submitted — waiting for approval');return;}
   btn.disabled=true;
-  await update(ref(db,`circle/members/${id}`),{
-    total_pts:(m.total_pts||0)+2,
-    last_session_pts:2,
-    sessions_attended:(m.sessions_attended||0)+1,
-    checked_sessions:[...checked,session]
-  });
-  await update(ref(db,'circle'),{last_updated:now()});
-  toast('Checked in! +2 pts');
+  const r=push(ref(db,'circle/pending'));
+  await set(r,{type:'checkin',name:m.display||m.name,session,pts:2,submitted:now()});
+  toast('Check-in submitted — waiting for approval');
   document.getElementById('checkin-name').value='';
   setTimeout(()=>{btn.disabled=false;},3000);
 };
 
-function toast(msg) {
+function toast(msg){
   const el=document.getElementById('toast');
-  el.textContent=msg;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2500);
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
 }
 </script>
 </body>
